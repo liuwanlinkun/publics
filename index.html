@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>返葡归真 - 璧山葡萄产业服务平台</title>
+    <!-- 引入Bootstrap和图标库 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        /* 全局样式 - 政务风 */
+        :root {
+            --primary-color: #5A2488; /* 深葡萄紫（政务风） */
+            --secondary-color: #2D882D; /* 深绿（政务风） */
+            --light-color: #F5F5F5; /* 浅灰底 */
+            --dark-color: #212529; /* 正文深灰 */
+            --border-color: #E0E0E0; /* 边框色 */
+        }
+        body {
+            font-family: "Microsoft YaHei", "SimHei", sans-serif; /* 政务常用字体 */
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.7;
+            scroll-behavior: smooth;
+        }
+        /* 导航栏 - 政务风 */
+        .navbar {
+            background-color: #FFFFFF !important;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .navbar-brand img {
+            max-height: 70px;
+        }
+        .nav-link {
+            color: var(--dark-color) !important;
+            font-weight: 500;
+            font-size: 15px;
+            padding: 12px 15px !important;
+            margin: 0 2px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            background-color: var(--primary-color);
+            color: #FFFFFF !important;
+        }
+        /* 首页横幅 - 政务简约风 */
+        .hero {
+            background: linear-gradient(rgba(90, 36, 136, 0.8), rgba(45, 136, 45, 0.8)), url('images/bishan1.jpg') center/cover no-repeat;
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+        .hero-content p {
+            font-size: 1.1rem;
+            max-width: 900px;
+            margin: 0 auto 30px;
+            opacity: 0.95;
+        }
+        .btn-primary-custom {
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 30px;
+            font-size: 1rem;
+            border-radius: 4px;
+            color: white;
+            transition: background-color 0.3s;
+        }
+        .btn-primary-custom:hover {
+            background-color: #4A1E78;
+            color: white;
+        }
+        /* 板块通用样式 - 政务规整风 */
+        .section {
+            padding: 70px 0;
+            background-color: #FFFFFF;
+            margin-bottom: 1px solid var(--border-color);
+        }
+        .section-gray {
+            background-color: var(--light-color);
+        }
+        .container {
+            max-width: 1200px;
+        }
+        .section-title {
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        .section-title h2 {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 2rem;
+        }
+        .section-title p {
+            color: #666;
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        /* 溯源板块（背景历史） */
+        .origin-card {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 25px;
+            margin-bottom: 30px;
+            height: 100%;
+            background-color: #FFFFFF;
+        }
+        .origin-card i {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .origin-card h4 {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        .origin-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+        /* 品种板块 */
+        .grape-card {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            background-color: #FFFFFF;
+        }
+        .grape-card img {
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .grape-card .card-body {
+            padding: 20px;
+        }
+        .grape-card .card-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .grape-card .card-text {
+            color: #666;
+            line-height: 1.7;
+        }
+        /* 助农销售板块 */
+        .product-card {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px;
+            margin-bottom: 30px;
+            background-color: #FFFFFF;
+            height: 100%;
+        }
+        .product-card img {
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+        .farmer-name {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .product-price {
+            color: var(--secondary-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
+        /* 法律护航板块 */
+        .legal-card {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 25px;
+            margin-bottom: 30px;
+            background-color: #FFFFFF;
+            height: 100%;
+        }
+        .legal-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        .legal-card h4 {
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        .legal-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+        /* 页脚 - 政务风 */
+        footer {
+            background-color: var(--dark-color);
+            color: #CCCCCC;
+            padding: 60px 0 20px;
+            margin-top: 30px;
+        }
+        footer img {
+            max-height: 80px;
+            margin-bottom: 20px;
+        }
+        .footer-title {
+            color: #FFFFFF;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #CCCCCC;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: #FFFFFF;
+        }
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            font-size: 0.9rem;
+        }
+        /* 响应式适配 */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero {
+                height: 50vh;
+            }
+            .section {
+                padding: 50px 0;
+            }
+            .nav-link {
+                padding: 8px 10px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 - 政务风格 -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <!-- LOGO -->
+            <a class="navbar-brand" href="#">
+                <img src="images/your-logo.png" alt="返葡归真LOGO">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#origin">返葡归真·溯源</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#grape-variety">返葡归真·品韵</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#product-sale">返葡归真·助农</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#legal-service">返葡归真·护航</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">联系我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首页横幅 -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>返葡归真 · 璧山葡萄产业服务平台</h1>
+            <p>立足璧山特色农业资源，以品牌化、数字化、法治化助力葡萄产业高质量发展，切实保障农户权益，拓宽销售渠道，推动乡村振兴</p>
+            <a href="#origin" class="btn btn-primary-custom">进入平台</a>
+        </div>
+    </section>
+
+    <!-- 第一板块：返葡归真·溯源（背景/历史/产区） -->
+    <section id="origin" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>返葡归真·溯源</h2>
+                <p>璧山葡萄的历史沿革与产区优势</p>
+            </div>
+            <div class="row">
+                <!-- 历史背景 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="origin-card">
+                        <i class="bi bi-clock-history"></i>
+                        <h4>发展历史</h4>
+                        <p>璧山区葡萄种植始于上世纪90年代，历经30余年发展，已形成从种苗培育、标准化种植到品牌化销售的完整产业链。截至2025年，全区葡萄种植面积达1.2万亩，惠及农户2000余户，成为璧山区乡村振兴的核心特色产业。</p>
+                    </div>
+                </div>
+                <!-- 地理优势 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="origin-card">
+                        <i class="bi bi-geo-alt"></i>
+                        <h4>产区优势</h4>
+                        <p>璧山区地处重庆西部槽谷地带，属亚热带季风性湿润气候，年平均气温18.3℃，土壤以紫色土为主，有机质含量高，昼夜温差适中，为葡萄糖分积累和风味形成提供了得天独厚的自然条件。</p>
+                    </div>
+                </div>
+                <!-- 产业布局 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="origin-card">
+                        <i class="bi bi-map"></i>
+                        <h4>产业布局</h4>
+                        <p>核心种植区集中在丁家、青杠、大路、七塘等街道（镇），形成“一核多点”的产业布局。其中丁家街道被授予“重庆市葡萄之乡”称号，建成标准化示范基地8个，市级农民专业合作社12家。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二板块：返葡归真·品韵（葡萄品种/特色） -->
+    <section id="grape-variety" class="section section-gray">
+        <div class="container">
+            <div class="section-title">
+                <h2>返葡归真·品韵</h2>
+                <p>璧山特色葡萄品种与品质特征</p>
+            </div>
+            <div class="row">
+                <!-- 巨峰葡萄 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card grape-card">
+                        <img src="images/bishan2.jpg" class="card-img-top" alt="巨峰葡萄">
+                        <div class="card-body">
+                            <h5 class="card-title">巨峰葡萄（主栽品种）</h5>
+                            <p class="card-text">果穗圆锥形，果粒大且饱满，单粒重10-12克，果皮紫黑色，果粉厚，果肉软嫩多汁，可溶性固形物含量18-20%，酸甜适口，是璧山种植面积最大、市场认可度最高的品种。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 阳光玫瑰 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card grape-card">
+                        <img src="images/bishan3.jpg" class="card-img-top" alt="阳光玫瑰">
+                        <div class="card-body">
+                            <h5 class="card-title">阳光玫瑰（高端品种）</h5>
+                            <p class="card-text">果穗圆柱形，果粒黄绿色，单粒重8-10克，果肉脆甜无核，带有浓郁的玫瑰香气，可溶性固形物含量20-22%，是璧山葡萄产业升级的核心品种，主要供应高端商超及礼品市场。</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- 夏黑葡萄 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="card grape-card">
+                        <img src="images/bishan4.jpg" class="card-img-top" alt="夏黑葡萄">
+                        <div class="card-body">
+                            <h5 class="card-title">夏黑葡萄（特色品种）</h5>
+                            <p class="card-text">果穗圆锥形，果粒紫黑色，单粒重7-8克，无核化处理后口感脆甜，可溶性固形物含量19-21%，成熟早、耐储运，是璧山葡萄早市供应的主力品种，深受消费者青睐。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三板块：返葡归真·助农（销售渠道） -->
+    <section id="product-sale" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>返葡归真·助农</h2>
+                <p>直连产地与消费者，拓宽农户销售渠道</p>
+            </div>
+            <div class="row">
+                <!-- 产品1 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <img src="images/product1.jpg" alt="巨峰葡萄5斤装">
+                        <p class="farmer-name">农户：王友明（丁家街道新民村）</p>
+                        <h5>巨峰葡萄 5斤装</h5>
+                        <p class="product-price">¥45.00</p>
+                        <p>现摘现发，无农药残留，产地直供</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm w-100">联系购买</a>
+                    </div>
+                </div>
+                <!-- 产品2 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <img src="images/product2.jpg" alt="阳光玫瑰3斤装">
+                        <p class="farmer-name">农户：李素华（青杠街道清明村）</p>
+                        <h5>阳光玫瑰 3斤装</h5>
+                        <p class="product-price">¥88.00</p>
+                        <p>精品果串，礼盒包装，顺丰包邮</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm w-100">联系购买</a>
+                    </div>
+                </div>
+                <!-- 产品3 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <img src="images/product3.jpg" alt="夏黑葡萄10斤装">
+                        <p class="farmer-name">合作社：璧山葡萄种植专业合作社</p>
+                        <h5>夏黑葡萄 10斤装</h5>
+                        <p class="product-price">¥75.00</p>
+                        <p>无籽甜葡萄，适合批发/团购/企采</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm w-100">联系购买</a>
+                    </div>
+                </div>
+                <!-- 产品4 -->
+                <div class="col-lg-3 col-md-6">
+                    <div class="product-card">
+                        <img src="images/product4.jpg" alt="葡萄礼盒组合装">
+                        <p class="farmer-name">合作社：璧山精品葡萄产销合作社</p>
+                        <h5>葡萄礼盒 组合装</h5>
+                        <p class="product-price">¥128.00</p>
+                        <p>巨峰+阳光玫瑰，节日送礼优选</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm w-100">联系购买</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第四板块：返葡归真·护航（法律护航） -->
+    <section id="legal-service" class="section section-gray">
+        <div class="container">
+            <div class="section-title">
+                <h2>返葡归真·护航</h2>
+                <p>免费/低价法律服务，保障农户合法权益</p>
+            </div>
+            <div class="row">
+                <!-- 服务1 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="legal-card">
+                        <i class="bi bi-file-text"></i>
+                        <h4>土地流转合同审查</h4>
+                        <p>免费为辖区内葡萄种植农户审查土地流转合同，明确双方权责，规避霸王条款、权属不清等法律风险，全年累计服务超500人次。</p>
+                        <a href="#" class="btn btn-sm btn-primary">在线申请审查</a>
+                    </div>
+                </div>
+                <!-- 服务2 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="legal-card">
+                        <i class="bi bi-handshake"></i>
+                        <h4>购销合同定制审查</h4>
+                        <p>针对葡萄购销环节定制标准化合同模板，审查农户与收购商签订的购销合同，防范货款拖欠、违约毁约等问题，降低交易风险。</p>
+                        <a href="#" class="btn btn-sm btn-primary">获取标准模板</a>
+                    </div>
+                </div>
+                <!-- 服务3 -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="legal-card">
+                        <i class="bi bi-telephone"></i>
+                        <h4>免费法律咨询服务</h4>
+                        <p>组建专业法律服务团队，提供葡萄种植、销售、合作等环节的免费法律咨询，解答土地权属、劳动用工、产品质量等法律问题。</p>
+                        <a href="#" class="btn btn-sm btn-primary">拨打咨询热线</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <img src="images/your-logo.png" alt="返葡归真LOGO">
+                    <p>返葡归真·璧山葡萄产业服务平台由璧山区农业农村委员会指导建设，致力于推动璧山葡萄产业品牌化、标准化、法治化发展，助力农户增收致富。</p>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-title">联系我们</h5>
+                    <div class="footer-links">
+                        <a href="#"><i class="bi bi-geo-alt me-2"></i> 重庆市璧山区璧泉街道双星大道369号</a>
+                        <a href="#"><i class="bi bi-phone me-2"></i> 023-4142XXXX</a>
+                        <a href="#"><i class="bi bi-envelope me-2"></i> fanpuguizhen@bs.gov.cn</a>
+                        <a href="#"><i class="bi bi-clock me-2"></i> 工作时间：周一至周五 9:00-17:30</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="footer-title">快速链接</h5>
+                    <div class="footer-links">
+                        <a href="#origin">返葡归真·溯源</a>
+                        <a href="#grape-variety">返葡归真·品韵</a>
+                        <a href="#product-sale">返葡归真·助农</a>
+                        <a href="#legal-service">返葡归真·护航</a>
+                        <a href="#">政策文件</a>
+                        <a href="#">产业动态</a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2026 璧山区农业农村委员会 版权所有 | 渝ICP备XXXXXXXX号-1</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 引入JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        // 导航栏激活状态
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
